@@ -19,10 +19,14 @@ If e.g. `RENEWAL_TIME=10` and the lambda function computes that the access key i
 
 ![Architecture](./assets/architecture.drawio.png "TFC AWS IAM credential rotation")
 
+## Example
+
+![Example in TFC](./assets/tfc.png "TFC workspace variables")
 
 ## Prerequisites
 
 - [X] Terraform Cloud/Enterprise organization and workspace
+- [X] Terraform Cloud/Enterprise API token
 - [X] An already existing AWS iam policy that the AWS iam user receives (must be named like this: <tfc_deployer_user_name>-<tfc_workspace_name>)
 
 

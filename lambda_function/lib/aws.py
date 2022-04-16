@@ -16,7 +16,6 @@ class AWS:
     def create_user(self, userName):
         """
         Creates a user for tfe deployments.
-
         :return str: message
         """
 

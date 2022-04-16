@@ -38,7 +38,7 @@ resource "aws_lambda_function" "tfc_deployer_lambda" {
   filename         = data.archive_file.tfc_deployer_lambda.output_path
   source_code_hash = data.archive_file.tfc_deployer_lambda.output_base64sha256
   runtime          = "python3.8"
-  handler          = "handler.handler"
+  handler          = "handler.lambda_handler"
   timeout          = "300"
 
   environment {
@@ -125,12 +125,12 @@ resource "aws_iam_user" "tfc_deployer_user" {
 }
 
 data "aws_iam_policy" "tfc_deployer_user_policy" {
-  name = local.tfc_deployer
+  name = aws_iam_user.tfc_deployer_user.name
 }
 
 resource "aws_iam_user_policy_attachment" "tfc_deployer_user_policy" {
   policy_arn = data.aws_iam_policy.tfc_deployer_user_policy.arn
-  user       = local.tfc_deployer
+  user       = aws_iam_user.tfc_deployer_user.name
 }
 
 
@@ -143,7 +143,7 @@ resource "aws_lambda_permission" "tfc_deployer_lambda_permissions" {
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.tfc_deployer_lambda.function_name
-  principal     = "events.aws.com"
+  principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.tfc_deployer_cw_event_rule.arn
 }
 

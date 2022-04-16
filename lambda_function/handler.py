@@ -1,8 +1,8 @@
 import json
 import os
-from .common import Logger
-from .tfc import Terraform
-from .aws import AWS
+from lib.common import Logger
+from lib.tfc import Terraform
+from lib.aws import AWS
 import sys
 
 # Env variables
@@ -13,26 +13,32 @@ TFC_URL = os.getenv('TFC_URL', "https://app.terraform.io")
 TFC_WORKSPACE_ID = os.getenv('TFC_WORKSPACE_ID', None)
 TFC_DEPLOYER_NAME = os.getenv('TFC_DEPLOYER_NAME', None)
 TFC_VARS = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]
-SSL_VERIFY = bool(os.getenv('SSL_VERIFY', True))
-FORCE_CREATE_NEW_KEY = bool(os.getenv('FORCE_CREATE_NEW_KEY', False))
+SSL_VERIFY = os.getenv('SSL_VERIFY', "True")
+FORCE_CREATE_NEW_KEY = os.getenv('FORCE_CREATE_NEW_KEY', "False")
 RENEWAL_TIME = int(os.getenv('RENEWAL_TIME', 30))
 
 
 if CUSTOM_CA_BUNDLE_PATH is not None:
     os.environ['AWS_CA_BUNDLE'] = CUSTOM_CA_BUNDLE_PATH
+    sys.exit(1)
 
-# Check if necessary env variables have bee set
+if SSL_VERIFY == "False":
+    _ssl_verify = False
+else:
+    _ssl_verify = True
+
+# Check if necessary env variables have been set
 envs_to_check = [TFC_ORG, TFC_WORKSPACE_ID, TFC_TOKEN]
 
 if None in envs_to_check or "" in envs_to_check:
     Logger().getlogger.error("You must provide the following env variables: TFC_ORG, TFC_WORKSPACE_ID, TFC_TOKEN")
-   # sys.exit(1)
+    sys.exit(1)
 
-TFC = Terraform(tfc_token=TFC_TOKEN, tfc_url=TFC_URL, tfc_org=TFC_ORG, tfc_workspace_id=TFC_WORKSPACE_ID, ssl_verify=SSL_VERIFY)
+TFC = Terraform(tfc_token=TFC_TOKEN, tfc_url=TFC_URL, tfc_org=TFC_ORG, tfc_workspace_id=TFC_WORKSPACE_ID, ssl_verify=_ssl_verify)
 AWS = AWS()
 
 
-def handler(event,context):
+def lambda_handler(event, context):
     Logger().getlogger.info(json.dumps(event))
     account_id = AWS.get_account_id()
 
@@ -50,7 +56,7 @@ def handler(event,context):
         pass
 
     # I. Case: Revoke all keys and create a new one ####
-    if FORCE_CREATE_NEW_KEY:
+    if FORCE_CREATE_NEW_KEY == "True":
 
         Logger().getlogger.info("Deleting all keys!")
 
