@@ -15,7 +15,7 @@ data "aws_region" "this" {}
 
 locals {
   tfc_deployer         = "${var.tfc_deployer_user_name}-${var.tfc_workspace_name}"
-  lambda_function_name = local.tfc_deployer
+  lambda_function_name = "${local.tfc_deployer}-credentials-rotator"
 }
 
 # -----------------------------------------------------------------------------------------------------
@@ -36,6 +36,7 @@ data "archive_file" "tfc_deployer_lambda" {
 resource "aws_lambda_function" "tfc_deployer_lambda" {
   function_name    = local.lambda_function_name
   role             = aws_iam_role.tfc_deployer_lambda_role.arn
+  description      = "Rotates the IAM credentials for TFC workspace '${var.tfc_workspace_name}' in TFC organization '${var.tfc_organization_name}'."
   filename         = data.archive_file.tfc_deployer_lambda.output_path
   source_code_hash = data.archive_file.tfc_deployer_lambda.output_base64sha256
   runtime          = "python3.8"

@@ -8,10 +8,6 @@ class AWS:
 
     def __init__(self):
         self._iam_client = boto3.client('iam')
-        self._sts_client = boto3.client('sts')
-
-    def get_account_id(self):
-        return self._sts_client.get_caller_identity()['Account']
 
     def create_user(self, userName):
         """

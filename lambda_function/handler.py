@@ -40,7 +40,7 @@ AWS = AWS()
 
 def lambda_handler(event, context):
     Logger().getlogger.info(json.dumps(event))
-    account_id = AWS.get_account_id()
+    account_id = context.invoked_function_arn.split(":")[4]
 
     # Deploy a user for tfc deployments
    # AWS.create_user(userName=TFC_DEPLOYER_NAME)
