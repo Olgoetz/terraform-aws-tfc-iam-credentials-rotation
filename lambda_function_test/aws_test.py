@@ -2,7 +2,7 @@ import datetime
 from unittest import TestCase, mock
 import boto3
 import os
-from lambda_function.aws import AWS
+from lambda_function.lib.aws import AWS
 from moto import mock_iam
 from base import aws_credentials
 
