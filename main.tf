@@ -32,6 +32,7 @@ data "archive_file" "tfc_deployer_lambda" {
   type        = "zip"
 }
 
+#tfsec:ignore:aws-lambda-enable-tracing
 resource "aws_lambda_function" "tfc_deployer_lambda" {
   function_name    = local.lambda_function_name
   role             = aws_iam_role.tfc_deployer_lambda_role.arn
@@ -103,6 +104,7 @@ data "aws_iam_policy_document" "tfc_deployer_lambda_policy_inline" {
   }
 }
 
+#tfsec:ignore:aws-cloudwatch-log-group-customer-key
 resource "aws_cloudwatch_log_group" "tfc_deployer_lambda_log_group" {
   name              = "/aws/lambda/${local.lambda_function_name}"
   retention_in_days = 3
