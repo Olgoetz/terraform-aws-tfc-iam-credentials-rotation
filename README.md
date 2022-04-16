@@ -12,6 +12,14 @@ Afterwards the lambda function in this module is executed after deployment, crea
 and sets them as sensitive environment variables in the TFC workspace.
 Hence, the developer/end-user **never** sees these credentials and can start leveraging the TFC workspace for infrastructure deployments.
 
+In addition, the `RENEWAL_TIME` variable allows to customize the rotation interval (in days). A cron expression checks the validity of the key.
+If e.g. `RENEWAL_TIME=10` and the lambda function computes that the access key is older than 10 days it will be deleted and a new one is created.
+
+## Architecture
+
+![Architecture](./assets/architecture.drawio.png "TFC AWS IAM credential rotation")
+
+
 ## Prerequisites
 
 - [X] Terraform Cloud/Enterprise organization and workspace
