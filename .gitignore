@@ -1,0 +1,8 @@
+venv/
+*.bak
+.idea/
+myplan
+**.pytest_cache/
+*.zip
+*.tfstate*
+.terraform/
