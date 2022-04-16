@@ -13,9 +13,10 @@ def aws_credentials():
     os.environ['AWS_SECURITY_TOKEN'] = 'testing'
     os.environ['AWS_SESSION_TOKEN'] = 'testing'
     os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'
+    os.environ['TFC_DEPLOYER_NAME'] = 'tfc_deployer'
 
 @mock_iam
-@mock.patch.dict(os.environ, {'TFC_DEPLOYER_NAME': "tfc_deployer"}, clear=True)
+#@mock.patch.dict(os.environ, {'TFC_DEPLOYER_NAME': "tfc_deployer"}, clear=True)
 class TestAWSFunctions(TestCase):
 
     def setUp(self):
