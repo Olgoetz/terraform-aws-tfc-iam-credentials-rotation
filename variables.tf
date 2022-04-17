@@ -36,11 +36,6 @@ variable "tfc_workspace_id" {
   description = "ID of the tfc workspace"
 }
 
-variable "tfc_deployer_user_name" {
-  type        = string
-  description = "Name of the user tfc uses for deployments (will be suffixed with tfc_workspace_name)"
-  default     = "tfc-deployer"
-}
 
 variable "tfc_token_credential_rotation" {
   type        = string

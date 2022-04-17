@@ -27,7 +27,8 @@ If e.g. `RENEWAL_TIME=10` and the lambda function computes that the access key i
 
 - [X] Terraform Cloud/Enterprise organization and workspace
 - [X] Terraform Cloud/Enterprise API token
-- [X] An already existing AWS iam policy that the AWS iam user receives (must be named like this: <tfc_deployer_user_name>-<tfc_workspace_name>)
+- [X] An already existing AWS iam policy that the AWS iam user receives 
+- (must be named like this: <tfc_organization_name>-<tfc_workspace_name>-deployer)
 
 
 
@@ -79,7 +80,6 @@ No modules.
 | <a name="input_ssl_verify"></a> [ssl\_verify](#input\_ssl\_verify) | Activate/Deactivate ssl for lambda updating the credentials in tfc | `string` | `"True"` | no |
 | <a name="input_tfc_deployer_schedule_expression"></a> [tfc\_deployer\_schedule\_expression](#input\_tfc\_deployer\_schedule\_expression) | Cron expression when to check tfc credentials for validity | `string` | `"cron(0 20 * * ? *)"` | no |
 | <a name="input_tfc_deployer_user_credential_renewal"></a> [tfc\_deployer\_user\_credential\_renewal](#input\_tfc\_deployer\_user\_credential\_renewal) | Days after when the credentials in tfc have to be renewed | `number` | `10` | no |
-| <a name="input_tfc_deployer_user_name"></a> [tfc\_deployer\_user\_name](#input\_tfc\_deployer\_user\_name) | Name of the user tfc uses for deployments (will be suffixed with tfc\_workspace\_name) | `string` | `"tfc-deployer"` | no |
 | <a name="input_tfc_organization_name"></a> [tfc\_organization\_name](#input\_tfc\_organization\_name) | Name of the tfc organization | `string` | n/a | yes |
 | <a name="input_tfc_token_credential_rotation"></a> [tfc\_token\_credential\_rotation](#input\_tfc\_token\_credential\_rotation) | API token to authenticate against tfc to enable credential rotation | `string` | n/a | yes |
 | <a name="input_tfc_url"></a> [tfc\_url](#input\_tfc\_url) | URL of tfc | `string` | `"https://app.terraform.io"` | no |

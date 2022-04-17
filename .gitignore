@@ -6,3 +6,4 @@ myplan
 *.zip
 *.tfstate*
 .terraform/
+**tfsec/

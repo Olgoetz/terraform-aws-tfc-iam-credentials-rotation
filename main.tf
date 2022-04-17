@@ -14,8 +14,8 @@ data "aws_caller_identity" "this" {}
 data "aws_region" "this" {}
 
 locals {
-  tfc_deployer         = "${var.tfc_deployer_user_name}-${var.tfc_workspace_name}"
-  lambda_function_name = "${local.tfc_deployer}-credentials-rotator"
+  tfc_deployer         = "${var.tfc_organization_name}-${var.tfc_workspace_name}-deployer"
+  lambda_function_name = "${var.tfc_organization_name}-${var.tfc_workspace_name}-credentials-rotator"
 }
 
 # -----------------------------------------------------------------------------------------------------
@@ -61,7 +61,8 @@ resource "aws_lambda_function" "tfc_deployer_lambda" {
 }
 
 resource "aws_iam_role" "tfc_deployer_lambda_role" {
-  name = "${local.lambda_function_name}-lambda-role"
+  name        = local.lambda_function_name
+  description = "Lambda role for ${local.lambda_function_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
