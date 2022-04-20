@@ -57,15 +57,17 @@ No modules.
 | [aws_cloudwatch_event_rule.tfc_deployer_cw_event_rule](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_rule) | resource |
 | [aws_cloudwatch_event_target.tfc_deployer_cw_event_target](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target) | resource |
 | [aws_cloudwatch_log_group.tfc_deployer_lambda_log_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
+| [aws_iam_policy.tfc_deployer_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role.tfc_deployer_lambda_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_user.tfc_deployer_user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user_policy_attachment.tfc_deployer_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
+| [aws_iam_user_policy_attachment.tfc_deployer_user_policy_additional](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_lambda_function.tfc_deployer_lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function) | resource |
 | [aws_lambda_permission.tfc_deployer_lambda_permissions](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_permission) | resource |
 | [archive_file.tfc_deployer_lambda](https://registry.terraform.io/providers/hashicorp/archive/latest/docs/data-sources/file) | data source |
 | [aws_caller_identity.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [aws_iam_policy.tfc_deployer_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy) | data source |
 | [aws_iam_policy_document.tfc_deployer_lambda_policy_inline](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.tfc_deployer_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_lambda_invocation.tfc_deployer_lambda_invocation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/lambda_invocation) | data source |
 | [aws_region.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
@@ -75,10 +77,12 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_custom_ca_bundle_path"></a> [custom\_ca\_bundle\_path](#input\_custom\_ca\_bundle\_path) | Path of custom ca bundle for AWS Lambda (must be uploaded with the zip file) | `string` | `""` | no |
 | <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | Default tags to apply to all resources | `map(any)` | `{}` | no |
+| <a name="input_force_create_new_key"></a> [force\_create\_new\_key](#input\_force\_create\_new\_key) | Enforce the creation of new IAM credentials | `string` | `"False"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Region to deploy resources to | `string` | `"eu-central-1"` | no |
 | <a name="input_ssl_verify"></a> [ssl\_verify](#input\_ssl\_verify) | Activate/Deactivate ssl for lambda updating the credentials in tfc | `string` | `"True"` | no |
 | <a name="input_tfc_deployer_schedule_expression"></a> [tfc\_deployer\_schedule\_expression](#input\_tfc\_deployer\_schedule\_expression) | Cron expression when to check tfc credentials for validity | `string` | `"cron(0 20 * * ? *)"` | no |
 | <a name="input_tfc_deployer_user_credential_renewal"></a> [tfc\_deployer\_user\_credential\_renewal](#input\_tfc\_deployer\_user\_credential\_renewal) | Days after when the credentials in tfc have to be renewed | `number` | `10` | no |
+| <a name="input_tfc_deployer_user_policies"></a> [tfc\_deployer\_user\_policies](#input\_tfc\_deployer\_user\_policies) | List of policy arns to attach to the IAM user | `list(string)` | n/a | yes |
 | <a name="input_tfc_organization_name"></a> [tfc\_organization\_name](#input\_tfc\_organization\_name) | Name of the tfc organization | `string` | n/a | yes |
 | <a name="input_tfc_token_credential_rotation"></a> [tfc\_token\_credential\_rotation](#input\_tfc\_token\_credential\_rotation) | API token to authenticate against tfc to enable credential rotation | `string` | n/a | yes |
 | <a name="input_tfc_url"></a> [tfc\_url](#input\_tfc\_url) | URL of tfc | `string` | `"https://app.terraform.io"` | no |

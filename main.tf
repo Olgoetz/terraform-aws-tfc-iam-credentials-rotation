@@ -2,13 +2,6 @@
 # PROVIDER, DATA SOURCES, LOCALS
 # -----------------------------------------------------------------------------------------------------
 
-provider "aws" {
-  region = var.region
-  default_tags {
-    tags = var.default_tags
-  }
-}
-
 
 data "aws_caller_identity" "this" {}
 data "aws_region" "this" {}
@@ -52,7 +45,7 @@ resource "aws_lambda_function" "tfc_deployer_lambda" {
       TFC_WORKSPACE_ID      = var.tfc_workspace_id
       TFC_DEPLOYER_NAME     = local.tfc_deployer
       SSL_VERIFY            = var.ssl_verify
-      FORCE_CREATE_NEW_KEY  = "False"
+      FORCE_CREATE_NEW_KEY  = var.force_create_new_key
       LOG_LEVEL             = "INFO"
       RENEWAL_TIME          = var.tfc_deployer_user_credential_renewal
       CUSTOM_CA_BUNDLE_PATH = var.custom_ca_bundle_path
@@ -131,6 +124,8 @@ data "aws_lambda_invocation" "tfc_deployer_lambda_invocation" {
 resource "aws_iam_user" "tfc_deployer_user" {
   name = local.tfc_deployer
 }
+
+# Deny self modification
 data "aws_iam_policy_document" "tfc_deployer_user_policy" {
   statement {
     sid       = "DenyUserDelete"

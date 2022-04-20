@@ -21,6 +21,12 @@ variable "default_tags" {
 
 ##### TFC #####
 
+variable "force_create_new_key" {
+  type        = string
+  description = "Enforce the creation of new IAM credentials"
+  default     = "False"
+}
+
 variable "tfc_organization_name" {
   type        = string
   description = "Name of the tfc organization"
@@ -55,6 +61,10 @@ variable "tfc_deployer_user_credential_renewal" {
   default     = 10
 }
 
+variable "tfc_deployer_user_policies" {
+  type        = list(string)
+  description = "List of policy arns to attach to the IAM user"
+}
 
 variable "custom_ca_bundle_path" {
   type        = string
