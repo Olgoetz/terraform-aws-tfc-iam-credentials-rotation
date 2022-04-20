@@ -131,8 +131,6 @@ data "aws_lambda_invocation" "tfc_deployer_lambda_invocation" {
 resource "aws_iam_user" "tfc_deployer_user" {
   name = local.tfc_deployer
 }
-
-# Deny modification through the deployed user
 data "aws_iam_policy_document" "tfc_deployer_user_policy" {
   statement {
     sid       = "DenyUserDelete"
@@ -168,9 +166,20 @@ data "aws_iam_policy_document" "tfc_deployer_user_policy" {
 
 }
 
+resource "aws_iam_policy" "tfc_deployer_user_policy" {
+  name   = "${local.tfc_deployer}-base-policy"
+  policy = data.aws_iam_policy_document.tfc_deployer_user_policy.json
+}
 
 resource "aws_iam_user_policy_attachment" "tfc_deployer_user_policy" {
-  policy_arn = data.aws_iam_policy.tfc_deployer_user_policy.arn
+  policy_arn = aws_iam_policy.tfc_deployer_user_policy.arn
+  user       = aws_iam_user.tfc_deployer_user.name
+}
+
+# Add policies
+resource "aws_iam_user_policy_attachment" "tfc_deployer_user_policy_additional" {
+  count      = length(var.tfc_deployer_user_policies)
+  policy_arn = var.tfc_deployer_user_policies[count.index]
   user       = aws_iam_user.tfc_deployer_user.name
 }
 
