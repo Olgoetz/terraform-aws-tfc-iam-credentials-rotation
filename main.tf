@@ -85,18 +85,22 @@ resource "aws_iam_role" "tfc_deployer_lambda_role" {
 data "aws_iam_policy_document" "tfc_deployer_lambda_policy_inline" {
   statement {
     effect = "Allow"
-    actions = ["logs:CreateLogGroup",
+    actions = [
+      "logs:CreateLogGroup",
       "logs:CreateLogStream",
-    "logs:PutLogEvents"]
+      "logs:PutLogEvents"
+    ]
     resources = ["*"]
   }
 
   statement {
     effect = "Allow"
-    actions = ["iam:CreateUser",
+    actions = [
+      "iam:CreateUser",
       "iam:CreateAccessKey",
       "iam:DeleteAccessKey",
-    "iam:ListAccessKeys"]
+      "iam:ListAccessKeys"
+    ]
     resources = ["arn:aws:iam::${data.aws_caller_identity.this.account_id}:user/${local.tfc_deployer}"]
   }
   statement {
@@ -131,6 +135,7 @@ resource "aws_iam_user" "tfc_deployer_user" {
 data "aws_iam_policy" "tfc_deployer_user_policy" {
   name = aws_iam_user.tfc_deployer_user.name
 }
+
 
 resource "aws_iam_user_policy_attachment" "tfc_deployer_user_policy" {
   policy_arn = data.aws_iam_policy.tfc_deployer_user_policy.arn

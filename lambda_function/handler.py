@@ -74,7 +74,7 @@ def lambda_handler(event, context):
 
                 # List variables in order to get the id of the specified one
                 result = TFC.get_workspace_variable(variable_name=var)
-                TFC.update_workspace_variable(variable_name=result['Name'], variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
+                TFC.update_workspace_variable(variable_name=var, variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
 
         return {
             "StatusCode": 200,
@@ -98,7 +98,7 @@ def lambda_handler(event, context):
             if result is False:
                 # List variables in order to get the id of the specified one
                 result = TFC.get_workspace_variable(variable_name=var)
-                TFC.update_workspace_variable(variable_name=result['Name'], variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
+                TFC.update_workspace_variable(variable_name=var, variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
 
         return {
             "StatusCode": 200,
@@ -124,7 +124,7 @@ def lambda_handler(event, context):
                     result = TFC.get_workspace_variable(variable_name=var)
 
                     # Update variable
-                    TFC.update_workspace_variable(variable_name=result['Name'], variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
+                    TFC.update_workspace_variable(variable_name=var, variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
             return {
                 "StatusCode": 200,
                 "Body": json.dumps({"Message": "New AWS credentials set!"})
