@@ -6,7 +6,7 @@ from lib.aws import AWS
 import sys
 
 # Env variables
-CUSTOM_CA_BUNDLE_PATH = os.getenv('CUSTOM_CA_BUNDLE', None)
+CUSTOM_CA_BUNDLE_PATH = os.getenv('CUSTOM_CA_BUNDLE', "")
 TFC_TOKEN = os.getenv("TFC_TOKEN", None)
 TFC_ORG = os.getenv("TFC_ORG", None)
 TFC_URL = os.getenv('TFC_URL', "https://app.terraform.io")
@@ -18,7 +18,7 @@ FORCE_CREATE_NEW_KEY = os.getenv('FORCE_CREATE_NEW_KEY', "False")
 RENEWAL_TIME = int(os.getenv('RENEWAL_TIME', 30))
 
 
-if CUSTOM_CA_BUNDLE_PATH is not None:
+if not CUSTOM_CA_BUNDLE_PATH:
     os.environ['AWS_CA_BUNDLE'] = CUSTOM_CA_BUNDLE_PATH
 
 if SSL_VERIFY == "False":

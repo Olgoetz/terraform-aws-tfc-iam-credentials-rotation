@@ -73,7 +73,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_custom_ca_bundle_path"></a> [custom\_ca\_bundle\_path](#input\_custom\_ca\_bundle\_path) | Path of custom ca bundle for AWS Lambda (must be uploaded with the zip file) | `string` | `null` | no |
+| <a name="input_custom_ca_bundle_path"></a> [custom\_ca\_bundle\_path](#input\_custom\_ca\_bundle\_path) | Path of custom ca bundle for AWS Lambda (must be uploaded with the zip file) | `string` | `""` | no |
 | <a name="input_default_tags"></a> [default\_tags](#input\_default\_tags) | Default tags to apply to all resources | `map(any)` | `{}` | no |
 | <a name="input_region"></a> [region](#input\_region) | Region to deploy resources to | `string` | `"eu-central-1"` | no |
 | <a name="input_ssl_verify"></a> [ssl\_verify](#input\_ssl\_verify) | Activate/Deactivate ssl for lambda updating the credentials in tfc | `string` | `"True"` | no |

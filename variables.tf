@@ -59,7 +59,7 @@ variable "tfc_deployer_user_credential_renewal" {
 variable "custom_ca_bundle_path" {
   type        = string
   description = "Path of custom ca bundle for AWS Lambda (must be uploaded with the zip file)"
-  default     = null
+  default     = ""
 }
 
 variable "ssl_verify" {
