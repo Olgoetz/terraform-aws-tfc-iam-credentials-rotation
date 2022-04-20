@@ -132,8 +132,40 @@ resource "aws_iam_user" "tfc_deployer_user" {
   name = local.tfc_deployer
 }
 
-data "aws_iam_policy" "tfc_deployer_user_policy" {
-  name = aws_iam_user.tfc_deployer_user.name
+# Deny modification through the deployed user
+data "aws_iam_policy_document" "tfc_deployer_user_policy" {
+  statement {
+    sid       = "DenyUserDelete"
+    effect    = "Deny"
+    actions   = ["iam:DeleteUser"]
+    resources = [aws_iam_user.tfc_deployer_user.arn]
+  }
+  statement {
+    sid       = "DenyBasePolicyDetachment"
+    effect    = "Deny"
+    actions   = ["iam:DetachUserPolicy", "iam:DeleteUserPolicy"]
+    resources = [aws_iam_user.tfc_deployer_user.arn]
+    condition {
+      test     = "ArnLike"
+      values   = ["arn:aws:iam::${data.aws_caller_identity.this.account_id}:policy/${local.tfc_deployer}-base-policy"]
+      variable = "iam:PolicyARN"
+    }
+  }
+
+  statement {
+    sid       = "DenyBasePolicyModification"
+    effect    = "Deny"
+    actions   = ["iam:DeletePolicy"]
+    resources = ["arn:aws:iam::${data.aws_caller_identity.this.account_id}:policy/${local.tfc_deployer}-base-policy"]
+  }
+
+  statement {
+    sid       = "DenyBasePolicyModification2"
+    effect    = "Deny"
+    actions   = ["iam:AttachUserPolicy"]
+    resources = [aws_iam_user.tfc_deployer_user.arn]
+  }
+
 }
 
 
