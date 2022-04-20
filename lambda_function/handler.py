@@ -20,7 +20,6 @@ RENEWAL_TIME = int(os.getenv('RENEWAL_TIME', 30))
 
 if CUSTOM_CA_BUNDLE_PATH is not None:
     os.environ['AWS_CA_BUNDLE'] = CUSTOM_CA_BUNDLE_PATH
-    sys.exit(1)
 
 if SSL_VERIFY == "False":
     _ssl_verify = False
