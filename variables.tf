@@ -61,6 +61,7 @@ variable "custom_ca_bundle_path" {
   description = "Path of custom ca bundle for AWS Lambda (must be uploaded with the zip file)"
   default     = null
 }
+
 variable "ssl_verify" {
   type        = string
   description = "Activate/Deactivate ssl for lambda updating the credentials in tfc"
