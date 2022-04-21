@@ -4,7 +4,18 @@ A module that enables automatic rotation of AWS iam credentials and setting them
 to meet security/compliance standards.
 
 <!--ts-->
-
+* [TERRAFORM AWS TFC IAM CREDENTIALS ROTATION](#terraform-aws-tfc-iam-credentials-rotation)
+* [Idea](#idea)
+* [Architecture](#architecture)
+* [Example](#example)
+* [Prerequisites](#prerequisites)
+* [Terraform](#terraform)
+   * [Requirements](#requirements)
+   * [Providers](#providers)
+   * [Modules](#modules)
+   * [Resources](#resources)
+   * [Inputs](#inputs)
+   * [Outputs](#outputs)
 <!--te-->
 
 # Idea
