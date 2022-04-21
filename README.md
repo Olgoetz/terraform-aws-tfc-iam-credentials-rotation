@@ -3,33 +3,35 @@
 A module that enables automatic rotation of AWS iam credentials and setting them up in a TFC workspace
 to meet security/compliance standards.
 
-## Idea
+<!--ts-->
+
+<!--te-->
+
+# Idea
 
 Developers/End-users never need to access the AWS management console to deploy resources.
-In the target AWS account an IAM policy must exist that the new iam user uses.
-An administrator initially deploys this module in a workspace with his credentials.
+An administrator initially deploys this module in a workspace with his credentials with appropriate policies.
 Afterwards the lambda function in this module is executed after deployment, creates a new AWS Access Key
 and sets them as sensitive environment variables in the TFC workspace.
 Hence, the developer/end-user **never** sees these credentials and can start leveraging the TFC workspace for infrastructure deployments.
 
-In addition, the `RENEWAL_TIME` variable allows to customize the rotation interval (in days). A cron expression checks the validity of the key.
-If e.g. `RENEWAL_TIME=10` and the lambda function computes that the access key is older than 10 days it will be deleted and a new one is created.
+In addition, the `tfc_deployer_user_credential_renewal` variable allows to customize the rotation interval (in days). A cron expression checks the validity of the key.
+If e.g. `tfc_deployer_user_credential_renewal=10` and the lambda function computes that the access key is older than 10 days it will be deleted and a new one is created.
 
-## Architecture
+# Architecture
 
 ![Architecture](./assets/architecture.drawio.png "TFC AWS IAM credential rotation")
 
-## Example
+# Example
 
 ![Example in TFC](./assets/tfc.png "TFC workspace variables")
 
-## Prerequisites
+# Prerequisites
 
 - [X] Terraform Cloud/Enterprise organization and workspace
 - [X] Terraform Cloud/Enterprise API token
-- [X] An already existing AWS iam policy that the AWS iam user receives (must be named like this: <tfc_organization_name>-<tfc_workspace_name>-deployer)
 
-
+# Terraform
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements

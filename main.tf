@@ -17,8 +17,6 @@ locals {
 # -----------------------------------------------------------------------------------------------------
 
 
-
-
 data "archive_file" "tfc_deployer_lambda" {
   output_path = "./lambda_payload.zip"
   source_dir  = "${path.module}/lambda_function"

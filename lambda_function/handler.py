@@ -66,14 +66,11 @@ def lambda_handler(event, context):
 
         # Create the variables in the tfc workspace
         for var in TFC_VARS:
-            result = TFC.create_workspace_variable(variable_name=var, val=new_key[var], csp_id=account_id)
+            TFC.create_workspace_variable(variable_name=var, val=new_key[var], csp_id=account_id)
 
             # Update variable
-            if result is False:
-
-                # List variables in order to get the id of the specified one
-                result = TFC.get_workspace_variable(variable_name=var)
-                TFC.update_workspace_variable(variable_name=var, variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
+            result = TFC.get_workspace_variable(variable_name=var)
+            TFC.update_workspace_variable(variable_name=var, variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
 
         return {
             "StatusCode": 200,
@@ -91,13 +88,11 @@ def lambda_handler(event, context):
 
         # Create the variables in the tfc workspace
         for var in TFC_VARS:
-            result = TFC.create_workspace_variable(variable_name=var, val=new_key[var], csp_id=account_id)
+            TFC.create_workspace_variable(variable_name=var, val=new_key[var], csp_id=account_id)
 
             # Update variable
-            if result is False:
-                # List variables in order to get the id of the specified one
-                result = TFC.get_workspace_variable(variable_name=var)
-                TFC.update_workspace_variable(variable_name=var, variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
+            result = TFC.get_workspace_variable(variable_name=var)
+            TFC.update_workspace_variable(variable_name=var, variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
 
         return {
             "StatusCode": 200,
@@ -117,13 +112,11 @@ def lambda_handler(event, context):
             new_key = AWS.create_access_key(userName=TFC_DEPLOYER_NAME)
 
             for var in TFC_VARS:
-                result = TFC.create_workspace_variable(variable_name=var, val=new_key[var], csp_id=account_id)
-                if result is False:
-                    # List variables in order to get the id of the specified one
-                    result = TFC.get_workspace_variable(variable_name=var)
+                TFC.create_workspace_variable(variable_name=var, val=new_key[var], csp_id=account_id)
 
-                    # Update variable
-                    TFC.update_workspace_variable(variable_name=var, variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
+                # Update variable
+                result = TFC.get_workspace_variable(variable_name=var)
+                TFC.update_workspace_variable(variable_name=var, variable_id=result['Id'], new_val=new_key[var], csp_id=account_id)
             return {
                 "StatusCode": 200,
                 "Body": json.dumps({"Message": "New AWS credentials set!"})
