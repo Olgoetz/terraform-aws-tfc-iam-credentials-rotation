@@ -45,7 +45,7 @@ class Terraform:
             "attributes": {
               "key": variable_name,
               "value": val,
-              "description": f"{variable_name} for {change_description(variable_name)} {csp_id} - updated on {timestamp}",
+              "description": f"Automated credential rotation for {change_description(variable_name)} {csp_id} (updated on {timestamp})",
               "category": "env",
               "hcl": False,
               "sensitive": True
@@ -121,7 +121,7 @@ class Terraform:
             "id": variable_id,
             "attributes": {
                 "value": new_val,
-                "description": f"{variable_name} for {change_description(variable_name)} {csp_id} - updated on {timestamp}"
+                "description": f"Automated credential rotation for {change_description(variable_name)} {csp_id} (updated on {timestamp})"
             },
             "type": "vars"
           }
