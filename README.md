@@ -103,7 +103,7 @@ module "tfc-iam-credentials-rotation" {
 to set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
 
 
-3. If everything correctly worked you would see a similar result in the TFE UI
+3. If everything correctly worked you would see a similar result in the TFC UI
 
 ![Example in TFC](./assets/tfc.png "TFC workspace variables")
 
