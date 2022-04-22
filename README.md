@@ -34,14 +34,82 @@ If e.g. `tfc_deployer_user_credential_renewal=10` and the lambda function comput
 
 ![Architecture](./assets/architecture.drawio.png "TFC AWS IAM credential rotation")
 
-# Example
+# Prerequisites
+- [X] Terraform Cloud/Enterprise organization and workspace
+- [X] Terraform Cloud/Enterprise API token
+
+# Features
+- [X] Automated rotation of AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+- [X] Deployed IAM user cannot modify itself (e.g. adding new polices). This must be done through an admin
+- [X] Customizable renewal time (in days) of credentials via a cron
+- [X] In case of any compromise renewal of credentials can be enforced on the fly
+
+# Getting started
+
+1. Use the module and define the IAM user's permissions 
+
+```hcl
+# Define the new policy that needs to be added the IAM user
+data "aws_iam_policy_document" "credentials_rotation" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:*",
+      "iam:*",
+      "s3:*",
+      "events:*",
+      "lambda:*",
+      "dynamodb:*",
+      "logs:*",
+      "sns:*",
+      "kms:*",
+      "cloudformation:*",
+      "rds:*",
+      "execute-api:*",
+      "secretsmanager:*",
+      "autoscaling:*",
+      "apigateway:*"
+    ]
+    resources = ["*"]
+  }
+
+}
+
+locals {
+  tfe_organization_name = "myOrga"
+  tfe_workspace_name = "tools-prod"
+  tfe_workspace_id = "ws-zumWwiRWbxziA"
+}
+
+# Create the policy
+resource "aws_iam_policy" "credential_rotation" {
+  name = "${local.tfe_organization_name}-${local.tfe_workspace_name}-deployer-allow-policy"
+  policy = data.aws_iam_policy_document.credentials_rotation.json
+}
+
+module "tfc-iam-credentials-rotation" {
+  source  = "terraform-aws-modules/tfc-iam-credentials-rotation/aws"
+  version = "1.0.0" 
+  tfc_workspace_id = local.tfe_workspace_id
+  tfc_workspace_name = local.tfe_workspace_name
+  tfc_organization_name = local.tfe_organization_name
+  tfc_token_credential_rotation = "<tfe-api-token>"
+  tfc_deployer_user_policies = [aws_iam_policy.credential_rotation.arn]
+  tfc_deployer_user_credential_renewal = 5
+}
+
+```
+2. Deploy the module with admin credentials (e.g. xxxxx-admin_adminstrator role) and do not forget 
+to set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
+
+
+3. If everything correctly worked you would see a similar result in the TFE UI
 
 ![Example in TFC](./assets/tfc.png "TFC workspace variables")
 
-# Prerequisites
+4. If you want to enforce the recreation of IAM credentials, just set TFC `tfc_force_create_new_key="True"` and 
+start another TFE run
 
-- [X] Terraform Cloud/Enterprise organization and workspace
-- [X] Terraform Cloud/Enterprise API token
 
 # Terraform
 
